@@ -55,7 +55,7 @@ process.on("SIGINT", function() {
   process.exit();
 });
 
-// Listen on port 443
-app.listen(443, () => console.log("Application running on port 3000"));
+// Listen on whatever port Heroku feels like for that day
+app.listen(process.env.PORT, () => console.log("Application running on port whatever"));
 
 module.exports = app;
