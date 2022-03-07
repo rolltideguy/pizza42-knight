@@ -67,6 +67,23 @@ const updateUI = async () => {
     if (isAuthenticated) {
       const user = await auth0.getUser();
 
+//       console.log(user);
+//       console.log(" is the user");
+
+      const claims = await auth0.getIdTokenClaims();
+      const verificationStatus = claims.email_verified;
+//       const id_token = claims.__raw;
+ 
+//       console.log(claims);
+//       console.log(" are the claims");
+//       console.log(verificationStatus);
+//       console.log(" is the verification status");
+//       console.log(claims['https://pleaseletthiswork.com/order_history']);
+//       console.log(" is the order_history");
+
+      document.getElementById("order_history").innerText = claims['https://pleaseletthiswork.com/order_history'];
+      document.getElementById("email_verification").innerText = claims.email_verified;
+
       document.getElementById("profile-data").innerText = JSON.stringify(
         user,
         null,
