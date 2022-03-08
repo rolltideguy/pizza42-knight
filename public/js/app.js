@@ -163,7 +163,19 @@ window.onload = async () => {
   updateUI();
 };
 
-const recordPizza = () => {
+const enableIfVerified = () => {
+  console.log(document.getElementById("email_verification").value);
+  console.log(" is the email verification status as stored in the hidden field of the html page");
+  if (document.getElementById("email_verification").value == "true") {
+    document.getElementById("activateMe").disabled = false;
+  }
+};
+
+const recordPizza = async () => {
+      const user = await auth0.getUser();
+      const user_id = user.sub;
+      console.log(user);
+      console.log(user_id);
       document.getElementById("pizzas").value = document.getElementById("pizzas").value + ']';
     console.log(document.getElementById("pizzas").value);
 /*     pizzaCount = newPizzas[0].length; */
@@ -188,6 +200,25 @@ const recordPizza = () => {
     pizzaCount++;
     console.log(pizzaCount);
     alert(`Here is where we would call the API for the payment provider and, after payment was completed, thank the user for their order`);
+
+    const order_history = JSON.parse(document.getElementById("order_history").value);
+    const pizzas = JSON.parse(document.getElementById("pizzas").value);
+    
+/* Here is where we need to write back the order_history */
+$.ajax({
+    url : "/api/update",
+    type: "POST",
+    data : {"pizzas": JSON.stringify(order_history.concat(pizzas)),
+            "user_id": user_id},
+    success: function(data, textStatus, jqXHR)
+    {
+        alert(textStatus);
+    },
+    error: function (jqXHR, textStatus, errorThrown)
+    {
+ 
+    }
+});
   };
 
 const increaseArrayLength = () => {
@@ -213,6 +244,7 @@ const increaseArrayLength = () => {
 const experiment = () => {
 //  document.getElementById("pizzas").value = "1";
   howLong = document.getElementById("pizzas").value;
+  howLongHistory = document.getElementById("order_history").value;
 
   if (howLong.length<1) {
     pizza = '[';

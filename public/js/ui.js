@@ -76,13 +76,13 @@ const updateUI = async () => {
  
 //       console.log(claims);
 //       console.log(" are the claims");
-//       console.log(verificationStatus);
-//       console.log(" is the verification status");
-//       console.log(claims['https://pleaseletthiswork.com/order_history']);
-//       console.log(" is the order_history");
+      console.log(verificationStatus);
+      console.log(" is the verification status");
+      console.log(claims['https://pleaseletthiswork.com/order_history']);
+      console.log(" is the order_history");
 
-      document.getElementById("order_history").innerText = claims['https://pleaseletthiswork.com/order_history'];
-      document.getElementById("email_verification").innerText = claims.email_verified;
+      document.getElementById("order_history").value = JSON.stringify(claims['https://pleaseletthiswork.com/order_history']);
+      document.getElementById("email_verification").value = verificationStatus;
 
       document.getElementById("profile-data").innerText = JSON.stringify(
         user,
@@ -107,6 +107,9 @@ const updateUI = async () => {
   }
 
   console.log("UI updated");
+  console.log(document.getElementById("order_history").value);
+  console.log(document.getElementById("email_verification").value);
+  
 };
 
 window.onpopstate = (e) => {
